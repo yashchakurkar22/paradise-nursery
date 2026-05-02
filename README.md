@@ -14,4 +14,4 @@ Paradise Nursery is a plant shop web application built using React and Redux.
 - CSS
 
 ## Author
-Your Name
+Yash Chakurkar
