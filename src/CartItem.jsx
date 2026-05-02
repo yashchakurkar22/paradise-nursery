@@ -1,19 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { removeItem, updateQuantity } from "./redux/CartSlice";
 
 function CartItem({ item }) {
-  const [quantity, setQuantity] = useState(item.quantity);
+  const dispatch = useDispatch();
 
   const increment = () => {
-    setQuantity(quantity + 1);
+    dispatch(updateQuantity({ id: item.id, quantity: item.quantity + 1 }));
   };
 
   const decrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
+    if (item.quantity === 1) {
+      dispatch(removeItem(item.id)); // remove if 0
+    } else {
+      dispatch(updateQuantity({ id: item.id, quantity: item.quantity - 1 }));
     }
   };
 
-  const total = quantity * item.price;
+  const handleDelete = () => {
+    dispatch(removeItem(item.id));
+  };
+
+  // dynamic total
+  const total = item.quantity * item.price;
 
   return (
     <div>
@@ -21,12 +30,13 @@ function CartItem({ item }) {
       <p>Price: ${item.price}</p>
 
       <button onClick={decrement}>-</button>
-      <span>{quantity}</span>
+      <span>{item.quantity}</span>
       <button onClick={increment}>+</button>
 
+      {/* DYNAMIC TOTAL */}
       <p>Total: ${total}</p>
 
-      <button>Remove</button>
+      <button onClick={handleDelete}>Delete</button>
     </div>
   );
 }
