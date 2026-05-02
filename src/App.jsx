@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
+import ProductList from "./ProductList";
 
 function App() {
+  const [showProductList, setShowProductList] = useState(false);
+
   return (
-    <div className="landing">
-      <h1>Paradise Nursery 🌿</h1>
-      <button>Get Started</button>
+    <div>
+      {!showProductList ? (
+        <div className="landing">
+          <h1>Welcome to Paradise Nursery</h1>
+          <button onClick={() => setShowProductList(true)}>
+            Get Started
+          </button>
+        </div>
+      ) : (
+        <ProductList />
+      )}
     </div>
   );
 }
